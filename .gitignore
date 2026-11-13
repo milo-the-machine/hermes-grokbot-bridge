@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.db
+*.eml
+*.log
+bridge.json
+*.local.json
