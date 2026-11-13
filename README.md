@@ -3,6 +3,7 @@
 Let a [Hermes Agent](https://hermes-agent.nousresearch.com) task a [Grok Bot](https://docs.x.ai/grok-bot/overview)
 with **no open ports**. One stdlib Python file (3.9+), MIT licensed.
 
+Walkthrough with diagrams, and what the Profero report changes: https://al-engr.com/hermes-grok-bot-a2a-recipe.html  
 Background on the design: https://al-engr.com/a2a-hermes-agent-grok-bot.html
 
 Your Hermes agent sends a task to a Grok Bot routine by webhook. The Bot emails the answer to your
@@ -254,7 +255,7 @@ What that means for this recipe:
 |---|---|---|
 | Read every task you send | Tasks are processed there | Send nothing secret (rule 5) |
 | Possibly forge a reply to an **open** task | The reply token for an open task is there, and the attacker may be able to send mail as the Bot | Results are untrusted anyway; tokens are one-time; deadlines close tasks |
-| Trigger extra routine runs | Platform credentials may be on that computer | The routine can only email `reply_to`, and you ignore untagged mail |
+| Trigger extra routine runs | Platform credentials may be on that computer | Anything it sends you must still pass the five checks; untagged mail is ignored |
 | Use anything you imported into Grok Bot | Cookies and logins live on that computer | Do not import them (rule 6); rotate anything already imported |
 | Reach your machine | — | It cannot: no inbound path exists, and your webhook key, mailbox password, and bridge token never leave your side |
 
