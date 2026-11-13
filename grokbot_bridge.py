@@ -189,7 +189,9 @@ def send_webhook(cfg: Config, envelope: dict) -> tuple[bool, str]:
 
 
 # ---------------------------------------------------------------- uplink
-SUBJ_RE = re.compile(r"\[A2A:(a2a-\d{8}-[0-9a-f]{6})\]")
+# The tag before the colon is cosmetic ([A2A:...], [GM:...]); the task id, the one-time token and the
+# DKIM-checked sender are what authenticate a reply.
+SUBJ_RE = re.compile(r"\[[A-Za-z0-9_-]{1,12}:(a2a-\d{8}-[0-9a-f]{6})\]")
 TOKEN_RE = re.compile(r"^\s*reply_token:\s*([0-9a-f]{32})\s*$", re.M)
 STATUS_RE = re.compile(r"^\s*status:\s*(done|failed|input-required)\s*$", re.M)
 DKIM_RE = re.compile(r"dkim=pass[^;]*?header\.(?:d=|i=@?)([a-z0-9.-]+)")

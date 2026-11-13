@@ -228,7 +228,7 @@ All must hold, or the mail is logged and ignored:
 2. An `Authentication-Results` header stamped by **your** provider, in the trusted position for that
    provider, shows `dkim=pass` for the Bot's mail domain, and no DMARC fail. Headers that arrived with
    the message do not count.
-3. The subject carries `[A2A:<task_id>]` for a task that is still open.
+3. The subject carries `[<tag>:<task_id>]` (any short tag; `[A2A:…]` by convention) for a task that is still open.
 4. The body's `reply_token` equals the one sent for that task. Tokens are one-time: they are cleared
    when a reply is applied, so a replayed mail is rejected.
 5. The task's deadline (`deadline_hours`, default 24) has not passed. Overdue tasks fail with
@@ -277,6 +277,7 @@ What that means for this recipe:
 | Unit tests (`test_grokbot_bridge.py`) | 11 tests, hermetic (mock webhook, synthetic headers, closed IMAP port) |
 | Fastmail sender check on real mail | `verify-mail` passed on all 9 real messages a Grok Bot sent to a Fastmail inbox; the same message with a lookalike From, or with Fastmail's Authentication-Results removed, failed |
 | Gmail sender check | Synthetic headers only, modelled on Gmail's layout. Run `verify-mail` on a real message from your Bot before relying on it |
+| End-to-end, CLI mode, real Grok Bot + Fastmail | 2026-11-13: `send` 17:52:38Z → Bot reply (its stated time 17:52:51Z) → `check` 17:58:14Z returned `completed` with the requested word and time; reply passed the sender, token and task checks |
 | Hosted Hermes (CLI mode from a sandbox) | Not yet tested by us |
 | Design lineage | Generalized from a proxy that has carried real Hermes → Grok Bot research tasks since October 2026 |
 
